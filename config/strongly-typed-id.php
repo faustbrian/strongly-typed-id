@@ -20,7 +20,7 @@ return [
     |
     | Supported: GeneratorType enum values (uuid_v1, uuid_v3, uuid_v4,
     |            uuid_v5, uuid_v6, uuid_v7, uuid_v8, ulid, sqids,
-    |            hashids, nanoid, guid, random_string, random_bytes, prefixed)
+    |            hashids, nanoid, base58, guid, random_string, random_bytes, prefixed)
     |
     | You may also specify a fully-qualified class name that implements the
     | Cline\StronglyTypedId\Contracts\IdGeneratorInterface interface if you wish to
@@ -117,6 +117,13 @@ return [
             | NanoID generates cryptographically secure, URL-friendly unique
             | identifiers. By default creates 21-char IDs with same collision
             | probability as UUID v4. More compact than UUIDs.
+            */
+        ],
+        'base58' => [
+            /*
+            | Base58 generates human-readable identifiers using an alphabet that
+            | excludes visually ambiguous characters (0, O, I, l). Commonly used
+            | in Bitcoin and systems requiring readable IDs. Cryptographically secure.
             */
         ],
         'guid' => [

@@ -12,6 +12,7 @@ namespace Cline\StronglyTypedId;
 use Cline\StronglyTypedId\Contracts\IdGeneratorInterface;
 use Cline\StronglyTypedId\Enums\GeneratorType;
 use Cline\StronglyTypedId\Exceptions\InvalidGeneratorException;
+use Cline\StronglyTypedId\Generators\Base58Generator;
 use Cline\StronglyTypedId\Generators\GuidGenerator;
 use Cline\StronglyTypedId\Generators\HashidsGenerator;
 use Cline\StronglyTypedId\Generators\NanoIdGenerator;
@@ -82,6 +83,7 @@ final class StronglyTypedIdServiceProvider extends PackageServiceProvider
      * - sqids: Short URL-safe identifiers
      * - hashids: Hash-based obfuscated identifiers
      * - nanoid: Compact URL-friendly unique identifiers
+     * - base58: Human-readable identifiers (excludes 0, O, I, l)
      * - guid: Microsoft GUID (uppercase UUID v4)
      * - random_string: Alphanumeric strings via Laravel Str::random()
      * - random_bytes: Hexadecimal strings via PHP random_bytes()
@@ -112,6 +114,7 @@ final class StronglyTypedIdServiceProvider extends PackageServiceProvider
                 GeneratorType::Sqids => new SqidsGenerator(),
                 GeneratorType::Hashids => new HashidsGenerator(),
                 GeneratorType::NanoId => new NanoIdGenerator(),
+                GeneratorType::Base58 => new Base58Generator(),
                 GeneratorType::Guid => new GuidGenerator(),
                 GeneratorType::RandomString => new RandomStringGenerator(),
                 GeneratorType::RandomBytes => new RandomBytesGenerator(),

@@ -130,6 +130,16 @@ enum GeneratorType: string
     case NanoId = 'nanoid';
 
     /**
+     * Base58 (Human-readable Identifier).
+     *
+     * Generates cryptographically secure identifiers using the base58 alphabet.
+     * Excludes visually ambiguous characters (0, O, I, l) for improved readability.
+     * Commonly used in Bitcoin addresses and systems requiring human-readable IDs.
+     * Uses uniform distribution to prevent modulo bias and ensure security.
+     */
+    case Base58 = 'base58';
+
+    /**
      * GUID (Globally Unique Identifier).
      *
      * Microsoft's implementation of UUID version 4, formatted in uppercase
