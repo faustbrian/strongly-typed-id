@@ -1,8 +1,3 @@
----
-title: ULID
-description: Universally Unique Lexicographically Sortable Identifiers for time-ordered IDs
----
-
 ULID (Universally Unique Lexicographically Sortable Identifier) is an alternative to UUIDs that provides better sortability and readability.
 
 ## What is ULID?

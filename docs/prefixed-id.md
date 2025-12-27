@@ -1,8 +1,3 @@
----
-title: Prefixed IDs
-description: Stripe-style prefixed identifiers combining custom prefixes with any ID generator
----
-
 Prefixed IDs enable Stripe-style identifier generation by combining a custom prefix with any underlying ID generator, creating identifiers like `cus_01906e2c-8e16-7e90-a1c1-6e47e5e6e3a0`.
 
 ## Configuring Prefixed ID Generator

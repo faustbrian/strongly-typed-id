@@ -1,8 +1,3 @@
----
-title: NanoID
-description: Compact, URL-friendly unique identifiers with customizable size and alphabet
----
-
 NanoID is a modern, secure, URL-friendly unique identifier generator designed as a compact alternative to UUID.
 
 ## What is NanoID?

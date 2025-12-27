@@ -1,8 +1,3 @@
----
-title: Laravel Integration
-description: Eloquent casts, Spatie Laravel Data support, and Laravel-specific patterns
----
-
 This library provides seamless integration with Laravel through Eloquent casts, model attributes, and Spatie Laravel Data support.
 
 ## Eloquent Model Integration

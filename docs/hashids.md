@@ -1,8 +1,3 @@
----
-title: Hashids
-description: Obfuscated short identifiers with salt-based encoding for enumeration protection
----
-
 Hashids generate short, unique, URL-safe identifiers with obfuscation via salt, preventing enumeration attacks.
 
 ## What is Hashids?

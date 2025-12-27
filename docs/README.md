@@ -1,8 +1,3 @@
----
-title: Getting Started
-description: Strongly-typed ID value objects for PHP with support for UUID, ULID, NanoID, GUID, Sqid, Hashids and Laravel integration
----
-
 ## Installation
 
 Install via Composer:

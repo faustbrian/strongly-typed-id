@@ -1,8 +1,3 @@
----
-title: Advanced Patterns
-description: DDD, event sourcing, CQRS, multi-tenancy, and complex architecture patterns
----
-
 This guide covers advanced usage patterns and best practices for strongly-typed IDs in complex applications.
 
 ## Domain-Driven Design

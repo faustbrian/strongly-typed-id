@@ -1,8 +1,3 @@
----
-title: Random Bytes
-description: Cryptographically secure hexadecimal identifiers using PHP's random_bytes()
----
-
 Random Bytes generator creates cryptographically secure hexadecimal identifiers using PHP's `random_bytes()` function, ideal for security tokens, session IDs, and contexts requiring strong randomness.
 
 ## What is Random Bytes?

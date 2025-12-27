@@ -1,8 +1,3 @@
----
-title: GUID
-description: Microsoft-compatible uppercase UUID format for .NET and Windows integration
----
-
 GUID (Globally Unique Identifier) is Microsoft's implementation of UUID, formatted in uppercase for compatibility with Windows and .NET ecosystems.
 
 ## What is GUID?

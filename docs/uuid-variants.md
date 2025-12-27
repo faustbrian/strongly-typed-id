@@ -1,8 +1,3 @@
----
-title: UUID Variants
-description: All UUID versions (v1-v8) with characteristics, use cases, and performance considerations
----
-
 This library supports all UUID versions (v1, v3, v4, v5, v6, v7, v8) through configurable generators. Each variant has different characteristics and use cases.
 
 ## Configuring the Generator

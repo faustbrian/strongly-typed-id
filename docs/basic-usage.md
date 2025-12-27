@@ -1,8 +1,3 @@
----
-title: Basic Usage
-description: Core operations for creating, converting, and comparing strongly-typed IDs
----
-
 Strongly-typed IDs provide a type-safe way to handle entity identifiers in your PHP applications. This guide covers the fundamental patterns for creating and using strongly-typed IDs.
 
 ## Creating ID Classes

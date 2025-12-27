@@ -1,8 +1,3 @@
----
-title: Random String
-description: Cryptographically secure alphanumeric identifiers using Laravel's Str::random()
----
-
 Random String generator creates cryptographically secure alphanumeric identifiers using Laravel's `Str::random()` helper, ideal for tokens, passwords, and general-purpose unique identifiers.
 
 ## What is Random String?

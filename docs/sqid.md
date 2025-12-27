@@ -1,8 +1,3 @@
----
-title: Sqid
-description: Short, unique, URL-safe identifiers with configurable length and alphabet
----
-
 Sqids (pronounced "squids") generate short, unique, URL-safe identifiers by encoding numeric values.
 
 ## What is Sqid?
