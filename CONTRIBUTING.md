@@ -14,7 +14,7 @@ Thank you for your interest in contributing to this project. We value your contr
 1. Fork the repository to your GitHub account
 2. Clone your fork locally:
    ```bash
-   git clone https://github.com/faustbrian/strongly-typed-id.git
+   git clone https://git.cline.sh/faustbrian/strongly-typed-id.git
    cd strongly-typed-id
    ```
 3. Install dependencies:
