@@ -1,0 +1,11 @@
+parameters:
+    level: max
+    paths:
+        - src
+    excludePaths:
+        - tests/
+        - vendor/
+    ignoreErrors:
+        - identifier: new.static
+        - identifier: missingType.generics
+        - identifier: function.alreadyNarrowedType
