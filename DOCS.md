@@ -1,18 +1,18 @@
 ## Table of Contents
 
-1. [Overview](#doc-docs-readme) (`docs/README.md`)
-2. [Advanced Patterns](#doc-docs-advanced-patterns) (`docs/advanced-patterns.md`)
-3. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
-4. [Guid](#doc-docs-guid) (`docs/guid.md`)
-5. [Hashids](#doc-docs-hashids) (`docs/hashids.md`)
-6. [Laravel Integration](#doc-docs-laravel-integration) (`docs/laravel-integration.md`)
-7. [Nanoid](#doc-docs-nanoid) (`docs/nanoid.md`)
-8. [Prefixed Id](#doc-docs-prefixed-id) (`docs/prefixed-id.md`)
-9. [Random Bytes](#doc-docs-random-bytes) (`docs/random-bytes.md`)
-10. [Random String](#doc-docs-random-string) (`docs/random-string.md`)
-11. [Sqid](#doc-docs-sqid) (`docs/sqid.md`)
-12. [Ulid](#doc-docs-ulid) (`docs/ulid.md`)
-13. [Uuid Variants](#doc-docs-uuid-variants) (`docs/uuid-variants.md`)
+1. [Overview](#doc-docs-readme)
+2. [Advanced Patterns](#doc-docs-advanced-patterns)
+3. [Basic Usage](#doc-docs-basic-usage)
+4. [Guid](#doc-docs-guid)
+5. [Hashids](#doc-docs-hashids)
+6. [Laravel Integration](#doc-docs-laravel-integration)
+7. [Nanoid](#doc-docs-nanoid)
+8. [Prefixed Id](#doc-docs-prefixed-id)
+9. [Random Bytes](#doc-docs-random-bytes)
+10. [Random String](#doc-docs-random-string)
+11. [Sqid](#doc-docs-sqid)
+12. [Ulid](#doc-docs-ulid)
+13. [Uuid Variants](#doc-docs-uuid-variants)
 <a id="doc-docs-readme"></a>
 
 ## Installation
