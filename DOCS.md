@@ -1,18 +1,20 @@
 ## Table of Contents
 
-1. Overview (`docs/README.md`)
-2. Advanced Patterns (`docs/advanced-patterns.md`)
-3. Basic Usage (`docs/basic-usage.md`)
-4. Guid (`docs/guid.md`)
-5. Hashids (`docs/hashids.md`)
-6. Laravel Integration (`docs/laravel-integration.md`)
-7. Nanoid (`docs/nanoid.md`)
-8. Prefixed Id (`docs/prefixed-id.md`)
-9. Random Bytes (`docs/random-bytes.md`)
-10. Random String (`docs/random-string.md`)
-11. Sqid (`docs/sqid.md`)
-12. Ulid (`docs/ulid.md`)
-13. Uuid Variants (`docs/uuid-variants.md`)
+1. [Overview](#doc-docs-readme) (`docs/README.md`)
+2. [Advanced Patterns](#doc-docs-advanced-patterns) (`docs/advanced-patterns.md`)
+3. [Basic Usage](#doc-docs-basic-usage) (`docs/basic-usage.md`)
+4. [Guid](#doc-docs-guid) (`docs/guid.md`)
+5. [Hashids](#doc-docs-hashids) (`docs/hashids.md`)
+6. [Laravel Integration](#doc-docs-laravel-integration) (`docs/laravel-integration.md`)
+7. [Nanoid](#doc-docs-nanoid) (`docs/nanoid.md`)
+8. [Prefixed Id](#doc-docs-prefixed-id) (`docs/prefixed-id.md`)
+9. [Random Bytes](#doc-docs-random-bytes) (`docs/random-bytes.md`)
+10. [Random String](#doc-docs-random-string) (`docs/random-string.md`)
+11. [Sqid](#doc-docs-sqid) (`docs/sqid.md`)
+12. [Ulid](#doc-docs-ulid) (`docs/ulid.md`)
+13. [Uuid Variants](#doc-docs-uuid-variants) (`docs/uuid-variants.md`)
+<a id="doc-docs-readme"></a>
+
 ## Installation
 
 Install via Composer:
@@ -119,6 +121,8 @@ IdGenerator::setGenerator(GeneratorType::UuidV7);
 - **[UUID Variants](uuid-variants)** - All UUID versions explained
 - **[ULID](ulid)** - Lexicographically sortable identifiers
 - **[Advanced Patterns](advanced-patterns)** - DDD and complex use cases
+
+<a id="doc-docs-advanced-patterns"></a>
 
 This guide covers advanced usage patterns and best practices for strongly-typed IDs in complex applications.
 
@@ -496,6 +500,8 @@ final class UserFixtures
 $john = User::factory()->create(['id' => UserFixtures::johnDoeId()]);
 ```
 
+<a id="doc-docs-basic-usage"></a>
+
 Strongly-typed IDs provide a type-safe way to handle entity identifiers in your PHP applications. This guide covers the fundamental patterns for creating and using strongly-typed IDs.
 
 ## Creating ID Classes
@@ -631,6 +637,8 @@ $userId->value = 'new-value'; // Error: Cannot modify readonly property
 
 This immutability ensures IDs remain stable throughout their lifetime.
 
+<a id="doc-docs-guid"></a>
+
 GUID (Globally Unique Identifier) is Microsoft's implementation of UUID, formatted in uppercase for compatibility with Windows and .NET ecosystems.
 
 ## What is GUID?
@@ -765,6 +773,8 @@ $guidWithBraces = '{' . $userId->toString() . '}';
 - Existing lowercase systems
 - Non-Microsoft tech stacks
 
+<a id="doc-docs-hashids"></a>
+
 Hashids generate short, unique, URL-safe identifiers with obfuscation via salt, preventing enumeration attacks.
 
 ## What is Hashids?
@@ -888,6 +898,8 @@ Schema::create('users', function (Blueprint $table) {
 - Time-ordered IDs required
 - Maximum collision resistance
 - No secret management desired
+
+<a id="doc-docs-laravel-integration"></a>
 
 This library provides seamless integration with Laravel through Eloquent casts, model attributes, and Spatie Laravel Data support.
 
@@ -1286,6 +1298,8 @@ class AppServiceProvider extends ServiceProvider
 }
 ```
 
+<a id="doc-docs-nanoid"></a>
+
 NanoID is a modern, secure, URL-friendly unique identifier generator designed as a compact alternative to UUID.
 
 ## What is NanoID?
@@ -1441,6 +1455,8 @@ Schema::create('events', function (Blueprint $table) {
 - Time-ordered IDs required (use v7)
 - Deterministic generation needed (v3/v5)
 - Enterprise system integration
+
+<a id="doc-docs-prefixed-id"></a>
 
 Prefixed IDs enable Stripe-style identifier generation by combining a custom prefix with any underlying ID generator, creating identifiers like `cus_01906e2c-8e16-7e90-a1c1-6e47e5e6e3a0`.
 
@@ -1724,6 +1740,8 @@ $id = $outerGen->generate();
 - Secure tokens with type identification
 - API keys with purpose prefix
 - Session identifiers
+
+<a id="doc-docs-random-bytes"></a>
 
 Random Bytes generator creates cryptographically secure hexadecimal identifiers using PHP's `random_bytes()` function, ideal for security tokens, session IDs, and contexts requiring strong randomness.
 
@@ -2059,6 +2077,8 @@ $decrypted = Crypt::decryptString($encrypted);
 - Rotate tokens periodically
 - Implement token revocation
 
+<a id="doc-docs-random-string"></a>
+
 Random String generator creates cryptographically secure alphanumeric identifiers using Laravel's `Str::random()` helper, ideal for tokens, passwords, and general-purpose unique identifiers.
 
 ## What is Random String?
@@ -2329,6 +2349,8 @@ public function generateApiToken()
 - **Random Bytes**: Need hexadecimal output
 - **Sqids**: Need encodeable/decodeable IDs
 
+<a id="doc-docs-sqid"></a>
+
 Sqids (pronounced "squids") generate short, unique, URL-safe identifiers by encoding numeric values.
 
 ## What is Sqid?
@@ -2424,6 +2446,8 @@ Schema::create('users', function (Blueprint $table) {
 - Time-ordered IDs needed
 - Maximum collision resistance required
 - Database UUID types preferred
+
+<a id="doc-docs-ulid"></a>
 
 ULID (Universally Unique Lexicographically Sortable Identifier) is an alternative to UUIDs that provides better sortability and readability.
 
@@ -2590,6 +2614,8 @@ $milliseconds = $ulid->getTimestamp();
 - Native UUID database column types needed
 - Deterministic generation required (v3/v5)
 - RFC 4122 compliance required
+
+<a id="doc-docs-uuid-variants"></a>
 
 This library supports all UUID versions (v1, v3, v4, v5, v6, v7, v8) through configurable generators. Each variant has different characteristics and use cases.
 
