@@ -9,42 +9,41 @@
 
 namespace Cline\StronglyTypedId\Casts\Data;
 
+use Cline\Struct\Contracts\CastInterface;
+use Cline\Struct\Metadata\PropertyMetadata;
 use Cline\StronglyTypedId\ValueObjects\StronglyTypedId;
-use Spatie\LaravelData\Casts\Cast;
-use Spatie\LaravelData\Support\Creation\CreationContext;
-use Spatie\LaravelData\Support\DataProperty;
-use Spatie\LaravelData\Support\Types\NamedType;
 
+use function count;
 use function is_string;
 use function is_subclass_of;
 
 /**
- * Cast for strongly typed IDs in Spatie Laravel Data objects.
+ * Cast for strongly typed IDs in Struct data objects.
  *
  * Automatically converts string values to StronglyTypedId value objects when casting
- * properties in Laravel Data classes. This cast intelligently detects the target ID type
+ * properties in Struct data classes. This cast intelligently detects the target ID type
  * and creates the appropriate instance if the property type is a subclass of StronglyTypedId.
  *
  * @author Brian Faust <brian@cline.sh>
  *
  * @example
  * ```php
- * use Spatie\LaravelData\Data;
+ * use Cline\Struct\AbstractData;
  * use Cline\StronglyTypedId\Casts\Data\StronglyTypedIdCast;
  *
- * class UserData extends Data
+ * final readonly class UserData extends AbstractData
  * {
  *     public function __construct(
- *         #[WithCast(StronglyTypedIdCast::class)]
+ *         #[CastWith(StronglyTypedIdCast::class)]
  *         public UserId $id,
  *     ) {}
  * }
  *
- * $userData = UserData::from(['id' => '550e8400-e29b-41d4-a716-446655440000']);
+ * $userData = UserData::create(['id' => '550e8400-e29b-41d4-a716-446655440000']);
  * // $userData->id is now a UserId instance
  * ```
  */
-final class StronglyTypedIdCast implements Cast
+final class StronglyTypedIdCast implements CastInterface
 {
     /**
      * Cast the given value to a strongly typed ID.
@@ -56,13 +55,8 @@ final class StronglyTypedIdCast implements Cast
      * - Returns the value unchanged if the property type is not a class
      * - Converts string values to the appropriate StronglyTypedId subclass
      *
-     * @param  DataProperty         $property   The property being cast
-     * @param  mixed                $value      The value to cast
-     * @param  array<string, mixed> $properties All properties of the data object
-     * @param  CreationContext      $context    The creation context
-     * @return mixed                The cast value (StronglyTypedId instance or original value)
      */
-    public function cast(DataProperty $property, mixed $value, array $properties, CreationContext $context): mixed
+    public function get(PropertyMetadata $property, mixed $value): mixed
     {
         if ($value === null) {
             return null;
@@ -76,18 +70,21 @@ final class StronglyTypedIdCast implements Cast
             return $value;
         }
 
-        $type = $property->type->type;
-
-        if (!$type instanceof NamedType) {
+        if (count($property->types) !== 1) {
             return $value;
         }
 
-        $className = $type->name;
+        $className = $property->types[0];
 
         if (!is_subclass_of($className, StronglyTypedId::class)) {
             return $value;
         }
 
         return new $className($value);
+    }
+
+    public function set(PropertyMetadata $property, mixed $value): mixed
+    {
+        return $value;
     }
 }

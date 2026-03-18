@@ -9,9 +9,9 @@
 
 namespace Tests;
 
+use Cline\Struct\StructServiceProvider;
 use Cline\StronglyTypedId\StronglyTypedIdServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Spatie\LaravelData\LaravelDataServiceProvider;
 
 /**
  * @author Brian Faust <brian@cline.sh>
@@ -22,7 +22,7 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
-            LaravelDataServiceProvider::class,
+            StructServiceProvider::class,
             StronglyTypedIdServiceProvider::class,
         ];
     }

@@ -8,16 +8,27 @@
  */
 
 use Cline\StronglyTypedId\Casts\Data\StronglyTypedIdCast;
-use ReflectionClass;
-use Spatie\LaravelData\Support\Creation\CreationContext;
-use Spatie\LaravelData\Support\DataProperty;
-use Spatie\LaravelData\Support\DataPropertyType;
-use Spatie\LaravelData\Support\Types\NamedType;
-use Spatie\LaravelData\Support\Types\UnionType;
+use Cline\Struct\Metadata\MetadataFactory;
+use Cline\Struct\Metadata\PropertyMetadata;
 use Tests\Fixtures\BusinessUnitId;
 use Tests\Fixtures\RegularClass;
+use Tests\Fixtures\RegularClassData;
+use Tests\Fixtures\UnionValueData;
 use Tests\Fixtures\UserData;
 use Tests\Fixtures\UserId;
+
+function propertyMetadataFor(string $dataClass, string $property): PropertyMetadata
+{
+    $metadata = new MetadataFactory()->for($dataClass);
+
+    foreach ($metadata->properties as $candidate) {
+        if ($candidate->name === $property) {
+            return $candidate;
+        }
+    }
+
+    throw new InvalidArgumentException("Property [{$property}] not found on [{$dataClass}].");
+}
 
 describe('StronglyTypedIdCast', function (): void {
     describe('Happy Paths', function (): void {
@@ -26,7 +37,7 @@ describe('StronglyTypedIdCast', function (): void {
             $uuid = '01999aaa-0000-7000-a000-000000000000';
 
             // Act
-            $userData = UserData::from(['id' => $uuid]);
+            $userData = UserData::create(['id' => $uuid]);
 
             // Assert
             expect($userData->id)->toBeInstanceOf(UserId::class);
@@ -38,7 +49,7 @@ describe('StronglyTypedIdCast', function (): void {
             $userId = UserId::fromString('01999aaa-0000-7000-a000-000000000000');
 
             // Act
-            $userData = UserData::from(['id' => $userId]);
+            $userData = UserData::create(['id' => $userId]);
 
             // Assert
             expect($userData->id)->toBe($userId);
@@ -51,7 +62,7 @@ describe('StronglyTypedIdCast', function (): void {
             $buUuid = '01999bbb-0000-7000-a000-000000000000';
 
             // Act
-            $userData = UserData::from([
+            $userData = UserData::create([
                 'id' => $uuid,
                 'businessUnitId' => $buUuid,
             ]);
@@ -68,7 +79,7 @@ describe('StronglyTypedIdCast', function (): void {
             $uuid = '550e8400-e29b-41d4-a716-446655440000';
 
             // Act
-            $userData = UserData::from(['id' => $uuid]);
+            $userData = UserData::create(['id' => $uuid]);
 
             // Assert
             expect($userData->id)->toBeInstanceOf(UserId::class);
@@ -80,7 +91,7 @@ describe('StronglyTypedIdCast', function (): void {
             $uuid = '01999aaa-0000-7000-a000-000000000000';
 
             // Act
-            $userData = UserData::from(['id' => $uuid]);
+            $userData = UserData::create(['id' => $uuid]);
 
             // Assert
             expect($userData->id)->toBeInstanceOf(UserId::class);
@@ -92,7 +103,7 @@ describe('StronglyTypedIdCast', function (): void {
             $mixedCaseUuid = '01999AAA-0000-7000-A000-000000000000';
 
             // Act
-            $userData = UserData::from(['id' => $mixedCaseUuid]);
+            $userData = UserData::create(['id' => $mixedCaseUuid]);
 
             // Assert
             expect($userData->id->value)->toBe($mixedCaseUuid);
@@ -103,7 +114,7 @@ describe('StronglyTypedIdCast', function (): void {
             $uuid = '01999aaa-0000-7000-a000-000000000000';
 
             // Act
-            $userData = UserData::from([
+            $userData = UserData::create([
                 'id' => $uuid,
                 'businessUnitId' => null,
             ]);
@@ -119,7 +130,7 @@ describe('StronglyTypedIdCast', function (): void {
             $buUuid = '01999bbb-0000-7000-a000-000000000000';
 
             // Act
-            $userData = UserData::from([
+            $userData = UserData::create([
                 'id' => $userId,
                 'businessUnitId' => $buUuid,
             ]);
@@ -137,19 +148,19 @@ describe('StronglyTypedIdCast', function (): void {
             $invalidUuid = 'not-a-valid-uuid';
 
             // Act & Assert
-            expect(fn (): UserData => UserData::from(['id' => $invalidUuid]))
+            expect(fn (): UserData => UserData::create(['id' => $invalidUuid]))
                 ->toThrow(InvalidArgumentException::class, 'Invalid UUID format');
         });
 
         test('throws exception when string is empty', function (): void {
             // Arrange & Act & Assert
-            expect(fn (): UserData => UserData::from(['id' => '']))
+            expect(fn (): UserData => UserData::create(['id' => '']))
                 ->toThrow(InvalidArgumentException::class, 'cannot be empty');
         });
 
         test('throws exception for malformed UUID patterns', function (string $invalidUuid): void {
             // Arrange & Act & Assert
-            expect(fn (): UserData => UserData::from(['id' => $invalidUuid]))
+            expect(fn (): UserData => UserData::create(['id' => $invalidUuid]))
                 ->toThrow(InvalidArgumentException::class);
         })->with([
             'missing segments' => ['01999aaa-0000-7000'],
@@ -161,7 +172,7 @@ describe('StronglyTypedIdCast', function (): void {
 
         test('handles invalid type gracefully via data validation', function (): void {
             // Arrange & Act & Assert - Integer will fail type check before reaching cast
-            expect(fn (): UserData => UserData::from([
+            expect(fn (): UserData => UserData::create([
                 'id' => '01999aaa-0000-7000-a000-000000000000',
                 'businessUnitId' => 12_345, // Invalid type - will fail constructor type check
             ]))->toThrow(TypeError::class);
@@ -174,7 +185,7 @@ describe('StronglyTypedIdCast', function (): void {
             $uuid = '00000000-0000-0000-0000-000000000000';
 
             // Act
-            $userData = UserData::from(['id' => $uuid]);
+            $userData = UserData::create(['id' => $uuid]);
 
             // Assert
             expect($userData->id)->toBeInstanceOf(UserId::class);
@@ -186,7 +197,7 @@ describe('StronglyTypedIdCast', function (): void {
             $uuid = 'ffffffff-ffff-ffff-ffff-ffffffffffff';
 
             // Act
-            $userData = UserData::from(['id' => $uuid]);
+            $userData = UserData::create(['id' => $uuid]);
 
             // Assert
             expect($userData->id)->toBeInstanceOf(UserId::class);
@@ -198,7 +209,7 @@ describe('StronglyTypedIdCast', function (): void {
             $mixedCase = '01999AaA-0000-7000-A000-000000000000';
 
             // Act
-            $userData = UserData::from(['id' => $mixedCase]);
+            $userData = UserData::create(['id' => $mixedCase]);
 
             // Assert
             expect($userData->id->value)->toBe($mixedCase);
@@ -208,7 +219,7 @@ describe('StronglyTypedIdCast', function (): void {
             // Arrange
             $uuid = '01999aaa-0000-7000-a000-000000000000';
             $buUuid = '01999bbb-0000-7000-a000-000000000000';
-            $userData = UserData::from([
+            $userData = UserData::create([
                 'id' => $uuid,
                 'businessUnitId' => $buUuid,
             ]);
@@ -228,7 +239,7 @@ describe('StronglyTypedIdCast', function (): void {
             $uuid = '01999aaa-0000-7000-a000-000000000000';
 
             // Act
-            $userData = UserData::from(['id' => $uuid]);
+            $userData = UserData::create(['id' => $uuid]);
 
             // Assert
             expect($userData->id)->toBeInstanceOf(UserId::class);
@@ -242,13 +253,13 @@ describe('StronglyTypedIdCast', function (): void {
             $buUuid = '01999bbb-0000-7000-a000-000000000000';
 
             // Act
-            $userData1 = UserData::from([
+            $userData1 = UserData::create([
                 'id' => $uuid,
                 'businessUnitId' => $buUuid,
                 'name' => 'Test User',
             ]);
             $array = $userData1->toArray();
-            $userData2 = UserData::from($array);
+            $userData2 = UserData::create($array);
 
             // Assert
             expect($userData2->id->value)->toBe($uuid);
@@ -257,37 +268,23 @@ describe('StronglyTypedIdCast', function (): void {
         });
 
         test('returns null when cast receives null value', function (): void {
-            // Arrange - Use reflection to ensure we directly test null handling
             $cast = new StronglyTypedIdCast();
-
-            // Create a minimal DataProperty mock
-            $propertyReflection = new ReflectionClass(DataProperty::class);
-            $property = $propertyReflection->newInstanceWithoutConstructor();
-
-            $contextReflection = new ReflectionClass(CreationContext::class);
-            $context = $contextReflection->newInstanceWithoutConstructor();
+            $property = propertyMetadataFor(UserData::class, 'id');
 
             // Act - Cast should return null unchanged
-            $result = $cast->cast($property, null, [], $context);
+            $result = $cast->get($property, null);
 
             // Assert
             expect($result)->toBeNull();
         });
 
         test('returns StronglyTypedId instance unchanged when cast receives it', function (): void {
-            // Arrange - Directly test that StronglyTypedId instances pass through
             $cast = new StronglyTypedIdCast();
             $userId = UserId::fromString('01999aaa-0000-7000-a000-000000000000');
-
-            // Create minimal mocks
-            $propertyReflection = new ReflectionClass(DataProperty::class);
-            $property = $propertyReflection->newInstanceWithoutConstructor();
-
-            $contextReflection = new ReflectionClass(CreationContext::class);
-            $context = $contextReflection->newInstanceWithoutConstructor();
+            $property = propertyMetadataFor(UserData::class, 'id');
 
             // Act - Cast should return the instance unchanged
-            $result = $cast->cast($property, $userId, [], $context);
+            $result = $cast->get($property, $userId);
 
             // Assert - Same instance returned
             expect($result)->toBe($userId);
@@ -295,31 +292,12 @@ describe('StronglyTypedIdCast', function (): void {
         });
 
         test('returns string unchanged when property has union type', function (): void {
-            // Arrange - Use reflection to create DataProperty with union type without calling constructor
             $cast = new StronglyTypedIdCast();
-
-            // Create UnionType instance using reflection
-            $unionTypeReflection = new ReflectionClass(UnionType::class);
-            $unionType = $unionTypeReflection->newInstanceWithoutConstructor();
-
-            // Create DataPropertyType with union type
-            $dataPropertyTypeReflection = new ReflectionClass(DataPropertyType::class);
-            $dataPropertyType = $dataPropertyTypeReflection->newInstanceWithoutConstructor();
-            $typeProperty = $dataPropertyTypeReflection->getProperty('type');
-            $typeProperty->setValue($dataPropertyType, $unionType);
-
-            // Create DataProperty with our custom type
-            $propertyReflection = new ReflectionClass(DataProperty::class);
-            $property = $propertyReflection->newInstanceWithoutConstructor();
-            $dataPropertyTypeProperty = $propertyReflection->getProperty('type');
-            $dataPropertyTypeProperty->setValue($property, $dataPropertyType);
-
-            $contextReflection = new ReflectionClass(CreationContext::class);
-            $context = $contextReflection->newInstanceWithoutConstructor();
+            $property = propertyMetadataFor(UnionValueData::class, 'value');
             $stringValue = '01999aaa-0000-7000-a000-000000000000';
 
             // Act - Cast should return string unchanged since type is not NamedType
-            $result = $cast->cast($property, $stringValue, [], $context);
+            $result = $cast->get($property, $stringValue);
 
             // Assert
             expect($result)->toBe($stringValue);
@@ -327,33 +305,12 @@ describe('StronglyTypedIdCast', function (): void {
         });
 
         test('returns string unchanged when property class is not StronglyTypedId subclass', function (): void {
-            // Arrange - Use reflection to create DataProperty with non-StronglyTypedId NamedType
             $cast = new StronglyTypedIdCast();
-
-            // Create NamedType for RegularClass
-            $namedTypeReflection = new ReflectionClass(NamedType::class);
-            $namedType = $namedTypeReflection->newInstanceWithoutConstructor();
-            $nameProperty = $namedTypeReflection->getProperty('name');
-            $nameProperty->setValue($namedType, RegularClass::class);
-
-            // Create DataPropertyType with NamedType
-            $dataPropertyTypeReflection = new ReflectionClass(DataPropertyType::class);
-            $dataPropertyType = $dataPropertyTypeReflection->newInstanceWithoutConstructor();
-            $typeProperty = $dataPropertyTypeReflection->getProperty('type');
-            $typeProperty->setValue($dataPropertyType, $namedType);
-
-            // Create DataProperty with our custom type
-            $propertyReflection = new ReflectionClass(DataProperty::class);
-            $property = $propertyReflection->newInstanceWithoutConstructor();
-            $dataPropertyTypeProperty = $propertyReflection->getProperty('type');
-            $dataPropertyTypeProperty->setValue($property, $dataPropertyType);
-
-            $contextReflection = new ReflectionClass(CreationContext::class);
-            $context = $contextReflection->newInstanceWithoutConstructor();
+            $property = propertyMetadataFor(RegularClassData::class, 'value');
             $stringValue = 'test-value';
 
             // Act - Cast should return string unchanged since RegularClass is not a StronglyTypedId
-            $result = $cast->cast($property, $stringValue, [], $context);
+            $result = $cast->get($property, $stringValue);
 
             // Assert
             expect($result)->toBe($stringValue);

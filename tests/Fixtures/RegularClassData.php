@@ -16,13 +16,10 @@ use Cline\StronglyTypedId\Casts\Data\StronglyTypedIdCast;
 /**
  * @author Brian Faust <brian@cline.sh>
  */
-final readonly class UserData extends AbstractData
+final readonly class RegularClassData extends AbstractData
 {
     public function __construct(
         #[CastWith(StronglyTypedIdCast::class)]
-        public readonly UserId $id,
-        #[CastWith(StronglyTypedIdCast::class)]
-        public readonly ?BusinessUnitId $businessUnitId = null,
-        public readonly ?string $name = null,
+        public readonly RegularClass $value,
     ) {}
 }
