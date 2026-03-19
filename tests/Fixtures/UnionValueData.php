@@ -20,6 +20,6 @@ final readonly class UnionValueData extends AbstractData
 {
     public function __construct(
         #[CastWith(StronglyTypedIdCast::class)]
-        public readonly UserId|string $value,
+        public UserId|string $value,
     ) {}
 }

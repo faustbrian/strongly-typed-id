@@ -20,6 +20,6 @@ final readonly class RegularClassData extends AbstractData
 {
     public function __construct(
         #[CastWith(StronglyTypedIdCast::class)]
-        public readonly RegularClass $value,
+        public RegularClass $value,
     ) {}
 }

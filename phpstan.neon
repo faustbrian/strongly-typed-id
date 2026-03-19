@@ -7,5 +7,4 @@ parameters:
         - vendor/
     ignoreErrors:
         - identifier: new.static
-        - identifier: missingType.generics
         - identifier: function.alreadyNarrowedType

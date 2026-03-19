@@ -20,9 +20,9 @@ final readonly class UserData extends AbstractData
 {
     public function __construct(
         #[CastWith(StronglyTypedIdCast::class)]
-        public readonly UserId $id,
+        public UserId $id,
         #[CastWith(StronglyTypedIdCast::class)]
-        public readonly ?BusinessUnitId $businessUnitId = null,
-        public readonly ?string $name = null,
+        public ?BusinessUnitId $businessUnitId = null,
+        public ?string $name = null,
     ) {}
 }

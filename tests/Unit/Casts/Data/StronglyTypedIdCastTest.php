@@ -11,7 +11,6 @@ use Cline\StronglyTypedId\Casts\Data\StronglyTypedIdCast;
 use Cline\Struct\Metadata\MetadataFactory;
 use Cline\Struct\Metadata\PropertyMetadata;
 use Tests\Fixtures\BusinessUnitId;
-use Tests\Fixtures\RegularClass;
 use Tests\Fixtures\RegularClassData;
 use Tests\Fixtures\UnionValueData;
 use Tests\Fixtures\UserData;
@@ -27,7 +26,7 @@ function propertyMetadataFor(string $dataClass, string $property): PropertyMetad
         }
     }
 
-    throw new InvalidArgumentException("Property [{$property}] not found on [{$dataClass}].");
+    throw new InvalidArgumentException(sprintf('Property [%s] not found on [%s].', $property, $dataClass));
 }
 
 describe('StronglyTypedIdCast', function (): void {
