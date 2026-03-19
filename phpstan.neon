@@ -7,4 +7,3 @@ parameters:
         - vendor/
     ignoreErrors:
         - identifier: new.static
-        - identifier: function.alreadyNarrowedType
