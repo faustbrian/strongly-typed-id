@@ -9,9 +9,9 @@
 
 namespace Cline\StronglyTypedId\Casts\Data;
 
+use Cline\StronglyTypedId\ValueObjects\StronglyTypedId;
 use Cline\Struct\Contracts\CastInterface;
 use Cline\Struct\Metadata\PropertyMetadata;
-use Cline\StronglyTypedId\ValueObjects\StronglyTypedId;
 
 use function count;
 use function is_string;
@@ -54,7 +54,6 @@ final class StronglyTypedIdCast implements CastInterface
      * - Returns the value unchanged if it's not a string
      * - Returns the value unchanged if the property type is not a class
      * - Converts string values to the appropriate StronglyTypedId subclass
-     *
      */
     public function get(PropertyMetadata $property, mixed $value): mixed
     {

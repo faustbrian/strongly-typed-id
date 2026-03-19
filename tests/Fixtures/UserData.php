@@ -9,12 +9,13 @@
 
 namespace Tests\Fixtures;
 
+use Cline\StronglyTypedId\Casts\Data\StronglyTypedIdCast;
 use Cline\Struct\AbstractData;
 use Cline\Struct\Attributes\CastWith;
-use Cline\StronglyTypedId\Casts\Data\StronglyTypedIdCast;
 
 /**
  * @author Brian Faust <brian@cline.sh>
+ * @psalm-immutable
  */
 final readonly class UserData extends AbstractData
 {

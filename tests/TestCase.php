@@ -9,8 +9,8 @@
 
 namespace Tests;
 
-use Cline\Struct\StructServiceProvider;
 use Cline\StronglyTypedId\StronglyTypedIdServiceProvider;
+use Cline\Struct\StructServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 /**
